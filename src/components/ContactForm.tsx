@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCreateContact } from "../hooks/useContacts";
+import { Button, Input, TextField } from "@mui/material";
 
 const ContactForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,27 +23,30 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form onSubmit={handleSubmit} className="form">
+      <h1>Create Contact</h1>
+      <TextField
         type="text"
         placeholder="First Name"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
       />
-      <input
+      <TextField
         type="text"
         placeholder="Last Name"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
       />
-      <input
+      <TextField
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <button type="submit">Create Contact</button>
+      <Button type="submit" variant="contained" color="primary">
+        Create Contact
+      </Button>
     </form>
   );
 };

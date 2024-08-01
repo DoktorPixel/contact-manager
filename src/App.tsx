@@ -7,7 +7,7 @@ import ContactDetails from "./components/ContactDetails";
 const App: React.FC = () => {
   return (
     <Router>
-      <div>
+      <div className="main">
         <ContactForm />
         <Routes>
           <Route path="/" element={<ContactList />} />

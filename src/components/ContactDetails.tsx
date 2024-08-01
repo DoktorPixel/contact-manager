@@ -22,8 +22,8 @@ const ContactDetails: React.FC = () => {
       <h3>{`${first_name} ${last_name}`}</h3>
       <p>{email}</p>
       <div>
-        {tags.map((tag: any) => (
-          <span key={tag.id}>{tag.name}</span>
+        {tags?.map((tag: any) => (
+          <span key={tag.id}>{tag.tag}</span>
         ))}
       </div>
       <TagInput onAddTags={handleAddTags} />
