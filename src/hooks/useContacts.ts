@@ -45,3 +45,15 @@ export const useDeleteContact = () => {
 export const useContact = (id: string) => {
   return useQuery(["contact", id], () => fetchContact(id));
 };
+
+const addTagsToContact = async (id: string, tags: string[]) => {
+  const { data } = await apiClient.put(`/contact/${id}/tags`, { tags });
+  return data;
+};
+
+// export const useAddTagsToContact = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation(addTagsToContact, {
+//     onSuccess: () =>  queryClient.invalidateQueries("contact");
+//   });
+// };

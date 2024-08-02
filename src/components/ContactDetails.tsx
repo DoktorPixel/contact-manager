@@ -27,6 +27,7 @@ const ContactDetails: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: "20px",
         }}
       >
         <CircularProgress />

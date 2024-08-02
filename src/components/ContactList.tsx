@@ -14,6 +14,7 @@ const ContactList: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: "40px",
         }}
       >
         <CircularProgress />
