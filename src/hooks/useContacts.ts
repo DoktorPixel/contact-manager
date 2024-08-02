@@ -5,7 +5,7 @@ const fetchContacts = async () => {
   const { data } = await apiClient.get("/contacts", {
     params: { sort: "created:desc" },
   });
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -20,6 +20,7 @@ const deleteContact = async (id: string) => {
 
 const fetchContact = async (id: string) => {
   const { data } = await apiClient.get(`/contact/${id}`);
+  console.log("fetchContact", data);
   return data;
 };
 

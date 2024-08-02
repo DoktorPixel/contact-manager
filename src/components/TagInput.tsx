@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 const TagInput: React.FC<{ onAddTags: (tags: string[]) => void }> = ({
@@ -14,14 +15,16 @@ const TagInput: React.FC<{ onAddTags: (tags: string[]) => void }> = ({
   };
 
   return (
-    <div>
-      <input
+    <div className="tag-input-wrapper">
+      <TextField
         type="text"
-        placeholder="Add tags"
+        placeholder="Add new Tag"
         value={tagInput}
         onChange={(e) => setTagInput(e.target.value)}
       />
-      <button onClick={handleAddTags}>Add Tags</button>
+      <Button onClick={handleAddTags} variant="contained" color="primary">
+        Add Tag
+      </Button>
     </div>
   );
 };

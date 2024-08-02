@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCreateContact } from "../hooks/useContacts";
-import { Button, Input, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 const ContactForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,9 +12,12 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     if (firstName || lastName) {
       createContact({
-        "first name": [{ value: firstName, label: "first name" }],
-        "last name": [{ value: lastName, label: "last name" }],
-        email: [{ value: email, label: "email" }],
+        fields: {
+          "first name": [{ value: firstName, label: "first name" }],
+          "last name": [{ value: lastName, label: "last name" }],
+          email: [{ value: email, label: "email" }],
+        },
+
         record_type: "person",
         privacy: { edit: null, read: null },
         owner_id: null,
