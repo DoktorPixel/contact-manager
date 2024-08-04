@@ -5,7 +5,6 @@ const fetchContacts = async () => {
   const { data } = await apiClient.get("/contacts", {
     params: { sort: "created:desc" },
   });
-  // console.log(data);
   return data;
 };
 
@@ -20,7 +19,6 @@ const deleteContact = async (id: string) => {
 
 const fetchContact = async (id: string) => {
   const { data } = await apiClient.get(`/contact/${id}`);
-  console.log("fetchContact", data);
   return data;
 };
 
@@ -46,14 +44,25 @@ export const useContact = (id: string) => {
   return useQuery(["contact", id], () => fetchContact(id));
 };
 
-const addTagsToContact = async (id: string, tags: string[]) => {
-  const { data } = await apiClient.put(`/contact/${id}/tags`, { tags });
-  return data;
+const addTagsToContact = async ({
+  id,
+  tags,
+}: {
+  id: string;
+  tags: string[];
+}) => {
+  try {
+    const response = await apiClient.put(`/contacts/${id}/tags`, { tags });
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to add tags to contact with ID ${id}`, error);
+    throw error;
+  }
 };
 
-// export const useAddTagsToContact = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation(addTagsToContact, {
-//     onSuccess: () =>  queryClient.invalidateQueries("contact");
-//   });
-// };
+export const useAddTagsToContact = () => {
+  const queryClient = useQueryClient();
+  return useMutation(addTagsToContact, {
+    onSuccess: () => queryClient.invalidateQueries("contact"),
+  });
+};

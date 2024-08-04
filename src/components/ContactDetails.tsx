@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useContact } from "../hooks/useContacts";
+import { useContact, useAddTagsToContact } from "../hooks/useContacts";
 import TagInput from "./TagInput";
 import {
   Box,
@@ -14,9 +14,17 @@ import { transformContactData } from "@/helpers/contactHelpers";
 const ContactDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useContact(id!);
-  const navigate = useNavigate();
+  const { mutate: addTagsToContact } = useAddTagsToContact();
 
-  const handleButtonClick = () => {
+  const handleAddTags = (newTags: string[]) => {
+    if (!data) return;
+    const existingTags = data.tags ? data.tags.map((tag: any) => tag.tag) : [];
+    const updatedTags = Array.from(new Set([...existingTags, ...newTags]));
+    addTagsToContact({ id: id!, tags: updatedTags });
+  };
+
+  const navigate = useNavigate();
+  const handleBackClick = () => {
     navigate(`/`);
   };
 
@@ -48,13 +56,8 @@ const ContactDetails: React.FC = () => {
 
   const contacts = transformContactData(data);
   const contact = contacts[0];
-  console.log("transformContactData", contact);
 
   const { avatar_url, first_name, last_name, email, tags } = contact;
-
-  const handleAddTags = (newTags: string[]) => {
-    // Logic to add new tags via API
-  };
 
   return (
     <div className="contact-details-wrapper">
@@ -79,7 +82,7 @@ const ContactDetails: React.FC = () => {
         <Button
           variant="outlined"
           className="come-back-button"
-          onClick={handleButtonClick}
+          onClick={handleBackClick}
         >
           come back
         </Button>

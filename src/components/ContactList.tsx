@@ -47,8 +47,6 @@ const ContactList: React.FC = () => {
       </Box>
     );
 
-  console.log("contacts", contacts);
-
   return (
     <Box sx={{ padding: 2 }}>
       <h1 className="contacts-list-header">Contacts</h1>

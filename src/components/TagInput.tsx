@@ -1,15 +1,19 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const TagInput: React.FC<{ onAddTags: (tags: string[]) => void }> = ({
+const TagInput: React.FC<{ onAddTags: (newTags: string[]) => void }> = ({
   onAddTags,
 }) => {
   const [tagInput, setTagInput] = useState("");
 
   const handleAddTags = () => {
     if (tagInput.trim()) {
-      const tags = tagInput.split(",").map((tag) => tag.trim());
-      onAddTags(tags);
+      const normalizedInput = tagInput.replace(/\s+/g, ",");
+      const newTags = normalizedInput
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag);
+      onAddTags(newTags);
       setTagInput("");
     }
   };
