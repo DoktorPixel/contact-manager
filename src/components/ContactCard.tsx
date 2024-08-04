@@ -11,7 +11,7 @@ interface ContactCardProps {
     first_name: string;
     last_name: string;
     email: string;
-    tags: [any];
+    tags: Array<{ id: string; tag: string }>;
   };
 }
 

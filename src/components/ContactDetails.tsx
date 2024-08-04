@@ -16,13 +16,6 @@ const ContactDetails: React.FC = () => {
   const { data, isLoading, error } = useContact(id!);
   const { mutate: addTagsToContact } = useAddTagsToContact();
 
-  const handleAddTags = (newTags: string[]) => {
-    if (!data) return;
-    const existingTags = data.tags ? data.tags.map((tag: any) => tag.tag) : [];
-    const updatedTags = Array.from(new Set([...existingTags, ...newTags]));
-    addTagsToContact({ id: id!, tags: updatedTags });
-  };
-
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate(`/`);
@@ -58,6 +51,16 @@ const ContactDetails: React.FC = () => {
   const contact = contacts[0];
 
   const { avatar_url, first_name, last_name, email, tags } = contact;
+
+  console.log("tags", tags);
+  const handleAddTags = (newTags: string[]) => {
+    if (!data) return;
+    console.log("newTags", newTags);
+    const existingTags = tags.map((tag) => tag.tag);
+    console.log("existingTags", existingTags);
+    const updatedTags = Array.from(new Set([...existingTags, ...newTags]));
+    addTagsToContact({ id: id!, tags: updatedTags });
+  };
 
   return (
     <div className="contact-details-wrapper">

@@ -15,7 +15,7 @@ interface Contact {
   first_name: string;
   last_name: string;
   email: string;
-  tags: Array<{ id: string; name: string }>;
+  tags: Array<{ id: string; tag: string }>;
 }
 
 export const transformContactData = (data: any): Contact[] => {
