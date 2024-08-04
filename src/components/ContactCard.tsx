@@ -29,11 +29,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
   };
 
   return (
-    <Card
-      sx={{ display: "flex", mb: 2 }}
-      onClick={handleCardClick}
-      className="contact-card"
-    >
+    <div onClick={handleCardClick} className="contact-card">
       <div className="contact-card-wrapper">
         <Avatar
           src={contact.avatar_url}
@@ -58,7 +54,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
       <button onClick={handleDelete}>
         <CloseLogo />
       </button>
-    </Card>
+    </div>
   );
 };
 

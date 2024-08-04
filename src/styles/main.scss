@@ -32,18 +32,24 @@
   height: 100%;
   top: 20px;
   gap: 10px;
+  z-index: 100;
+  background-color: white;
   button {
     height: 50px;
   }
 }
 
-.contact-card.css-yjr02y-MuiPaper-root-MuiCard-root {
+.contact-card {
   display: flex;
   align-items: start;
   justify-content: space-between;
+  margin-bottom: 10px;
   width: 100%;
   padding: 6px;
   background-color: rgb(227, 242, 253, 0.2);
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   max-width: 600px;
   cursor: pointer;
   .contact-card-wrapper {
@@ -77,7 +83,7 @@
   }
 }
 
-.contact-card.css-yjr02y-MuiPaper-root-MuiCard-root:hover {
+.contact-card {
   transform: scaleX(1.01);
 }
 
@@ -176,7 +182,7 @@
     }
   }
 
-  .contact-card.css-yjr02y-MuiPaper-root-MuiCard-root {
+  .contact-card {
     padding: 4px;
     margin-bottom: 10px;
     .contact-card-wrapper {

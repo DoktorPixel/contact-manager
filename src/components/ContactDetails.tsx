@@ -52,12 +52,9 @@ const ContactDetails: React.FC = () => {
 
   const { avatar_url, first_name, last_name, email, tags } = contact;
 
-  console.log("tags", tags);
   const handleAddTags = (newTags: string[]) => {
     if (!data) return;
-    console.log("newTags", newTags);
     const existingTags = tags.map((tag) => tag.tag);
-    console.log("existingTags", existingTags);
     const updatedTags = Array.from(new Set([...existingTags, ...newTags]));
     addTagsToContact({ id: id!, tags: updatedTags });
   };
