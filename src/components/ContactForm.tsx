@@ -14,9 +14,7 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
 
     if (!firstName && !lastName) {
-      setErrorMessage(
-        "Please fill in at least one of the fields: 'First name' or 'Last name'"
-      );
+      setErrorMessage("'First name' or 'Last name' is required");
       return;
     }
 
@@ -57,13 +55,26 @@ const ContactForm: React.FC = () => {
         placeholder="First Name"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
+        error={(!firstName || !lastName) && errorMessage !== ""}
+        helperText={
+          !firstName && errorMessage !== ""
+            ? "'First name' or 'Last name' is required"
+            : ""
+        }
       />
       <TextField
         type="text"
         placeholder="Last Name"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
+        error={(!firstName || !lastName) && errorMessage !== ""}
+        helperText={
+          !firstName && errorMessage !== ""
+            ? "'First name' or 'Last name' is required"
+            : ""
+        }
       />
+
       <TextField
         type="email"
         placeholder="Email"
@@ -76,7 +87,7 @@ const ContactForm: React.FC = () => {
         value={avatarUrl}
         onChange={(e) => setAvatarUrl(e.target.value)}
       />
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       <Button type="submit" variant="contained" color="primary">
         Create Contact
       </Button>

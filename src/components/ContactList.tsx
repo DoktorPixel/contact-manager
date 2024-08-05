@@ -9,16 +9,18 @@ const ContactList: React.FC = () => {
 
   if (isLoading)
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "40px",
-        }}
-      >
-        <CircularProgress />
-      </Box>
+      <div className="loading-box">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "100px",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </div>
     );
   if (error)
     return (
@@ -48,12 +50,14 @@ const ContactList: React.FC = () => {
     );
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <h1 className="contacts-list-header">Contacts</h1>
-      {contacts.map((contact: any) => (
-        <ContactCard key={contact.id} contact={contact} />
-      ))}
-    </Box>
+    <div className="contacts-list">
+      <Box>
+        <h1 className="contacts-list-header">Contacts</h1>
+        {contacts.map((contact: any) => (
+          <ContactCard key={contact.id} contact={contact} />
+        ))}
+      </Box>
+    </div>
   );
 };
 
