@@ -1,24 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useCreateContact } from "../hooks/useContacts";
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  firstName: yup.string(),
+  lastName: yup.string(),
+  email: yup.string().email("Must be a valid email").optional(),
+  avatarUrl: yup.string().url("Must be a valid URL").optional(),
+});
 
 const ContactForm: React.FC = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const { mutate: createContact } = useCreateContact();
+  const {
+    handleSubmit,
+    control,
+    setError,
+    clearErrors,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const { mutate: createContact, isError, isLoading } = useCreateContact();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: any) => {
+    const { firstName, lastName, email, avatarUrl } = data;
 
     if (!firstName && !lastName) {
-      setErrorMessage("'First name' or 'Last name' is required");
+      setError("firstName", { message: "First name or Last name is required" });
+      setError("lastName", { message: "First name or Last name is required" });
       return;
+    } else {
+      clearErrors(["firstName", "lastName"]);
     }
-
-    setErrorMessage("");
 
     const fields: Record<string, { value: string; label: string }[]> = {};
 
@@ -44,53 +60,88 @@ const ContactForm: React.FC = () => {
     if (avatarUrl) {
       contactData.avatar_url = avatarUrl;
     }
+
     createContact(contactData);
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
       <h1>Create Contact</h1>
-      <TextField
-        type="text"
-        placeholder="First Name"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        error={(!firstName || !lastName) && errorMessage !== ""}
-        helperText={
-          !firstName && errorMessage !== ""
-            ? "'First name' or 'Last name' is required"
-            : ""
-        }
-      />
-      <TextField
-        type="text"
-        placeholder="Last Name"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        error={(!firstName || !lastName) && errorMessage !== ""}
-        helperText={
-          !firstName && errorMessage !== ""
-            ? "'First name' or 'Last name' is required"
-            : ""
-        }
+
+      <Controller
+        name="firstName"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="First Name"
+            error={!!errors.firstName}
+            helperText={errors.firstName ? errors.firstName.message : ""}
+            fullWidth
+          />
+        )}
       />
 
-      <TextField
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        type="text"
-        placeholder="Avatars link"
-        value={avatarUrl}
-        onChange={(e) => setAvatarUrl(e.target.value)}
+      <Controller
+        name="lastName"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Last Name"
+            error={!!errors.lastName}
+            helperText={errors.lastName ? errors.lastName.message : ""}
+            fullWidth
+          />
+        )}
       />
 
-      <Button type="submit" variant="contained" color="primary">
-        Create Contact
+      <Controller
+        name="email"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            fullWidth
+          />
+        )}
+      />
+
+      <Controller
+        name="avatarUrl"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Avatar URL"
+            error={!!errors.avatarUrl}
+            helperText={errors.avatarUrl?.message}
+            fullWidth
+          />
+        )}
+      />
+
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        disabled={!isValid || isLoading}
+      >
+        {isLoading ? <CircularProgress /> : "Create Contact "}
       </Button>
+
+      {isError && (
+        <p className="error-message ">something went wrong, try again later</p>
+      )}
     </form>
   );
 };
