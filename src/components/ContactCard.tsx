@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteContact } from "../hooks/useContacts";
 import { Avatar } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 import { CloseLogo } from "@/assets/Icons";
 
 interface ContactCardProps {
@@ -18,10 +24,20 @@ interface ContactCardProps {
 const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
   const { mutate: deleteContact } = useDeleteContact();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
-  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
     deleteContact(contact.id);
+    setOpen(false);
   };
 
   const handleCardClick = () => {
@@ -51,9 +67,38 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
         </div>
       </div>
 
-      <button onClick={handleDelete}>
+      <button onClick={handleClickOpen}>
         <CloseLogo />
       </button>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Contact?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this contact? This action cannot be
+            undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" variant="contained">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            color="secondary"
+            variant="contained"
+            autoFocus
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
