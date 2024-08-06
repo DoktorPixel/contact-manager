@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteContact } from "../hooks/useContacts";
-import { Card, Avatar } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { CloseLogo } from "@/assets/Icons";
 
 interface ContactCardProps {

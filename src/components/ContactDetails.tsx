@@ -14,7 +14,11 @@ import { transformContactData } from "@/helpers/contactHelpers";
 const ContactDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useContact(id!);
-  const { mutate: addTagsToContact } = useAddTagsToContact();
+  const {
+    mutate: addTagsToContact,
+    isLoading: isTagsLoading,
+    isError: isTagsError,
+  } = useAddTagsToContact();
 
   const navigate = useNavigate();
   const handleBackClick = () => {
@@ -77,7 +81,11 @@ const ContactDetails: React.FC = () => {
           <span key={tag.id}>{tag.tag}</span>
         ))}
       </div>
-      <TagInput onAddTags={handleAddTags} />
+      <TagInput
+        onAddTags={handleAddTags}
+        isTagsLoading={isTagsLoading}
+        isTagsError={isTagsError}
+      />
       <div className="come-back-button-wrapper">
         <Button
           variant="outlined"
