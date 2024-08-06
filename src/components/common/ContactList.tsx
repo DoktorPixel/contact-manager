@@ -1,5 +1,5 @@
 import React from "react";
-import { useContacts } from "../hooks/useContacts";
+import { useContacts } from "@/hooks/useContacts";
 import ContactCard from "./ContactCard";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { transformContactData } from "@/helpers/contactHelpers";

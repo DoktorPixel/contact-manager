@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ContactDetails from "./components/ContactDetails";
+import ContactDetails from "./components/common/ContactDetails";
 import { Homepage } from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 

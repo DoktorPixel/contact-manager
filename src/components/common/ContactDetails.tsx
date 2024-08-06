@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useContact, useAddTagsToContact } from "../hooks/useContacts";
+import { useContact, useAddTagsToContact } from "@/hooks/useContacts";
 import TagInput from "./TagInput";
 import {
   Box,

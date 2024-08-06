@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDeleteContact } from "../hooks/useContacts";
+import { useDeleteContact } from "@/hooks/useContacts";
 import { Avatar } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
